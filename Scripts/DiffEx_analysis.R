@@ -4,9 +4,9 @@ library( "DESeq2" )
 library(ggplot2)
 
 #Read in miRNA counts data and phenotype files
-miRNA_counts<- read.csv('../Data/miRNA_counts_v2.csv', row.names=1, header=TRUE)
+miRNA_counts<- read.csv('../Organized_Data/miRNA_counts_v2.csv', row.names=1, header=TRUE)
 
-miRNA_pheno<- read.csv('../Data/miRNA_pheno_v2.csv', header=TRUE)
+miRNA_pheno<- read.csv('../Organized_Data/miRNA_pheno_v2.csv', header=TRUE)
 
 #Use DESeq to conduct diff expression analysis 
 dds <- DESeqDataSetFromMatrix(countData = miRNA_counts,
