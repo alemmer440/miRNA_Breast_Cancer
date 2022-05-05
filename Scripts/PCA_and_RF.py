@@ -214,10 +214,10 @@ p.figure.savefig('confusionmatrixv2.jpg', dpi=200)
 
 #Use cross validation to obtain performance metrics
 
-model= RandomForestClassifier()
+model2= RandomForestClassifier()
 scaler = preprocessing.StandardScaler()
 #model = RandomForestClassifier(max_depth=2, n_estimators=20)
-pipeline = Pipeline([('scaler', scaler), ('model', model)])
+pipeline = Pipeline([('scaler', scaler), ('model', model2)])
 
 # Cross validation on 10 different test train splits
 cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
