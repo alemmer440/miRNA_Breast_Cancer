@@ -51,7 +51,8 @@ p <- ggplot(data=resultdf, aes(x=log2FoldChange, y=-log10(padj),
   theme(legend.title = element_blank())+
   theme(text = element_text(size = 35))
 
-ggsave('volcanoplotv12.jpg', plot=p, width = 15, height = 15, dpi = 150, units = "in")
+ggsave('volcanoplotv12.jpg', plot=p, width = 15, height = 15,
+       dpi = 150, units = "in")
 
 
           
