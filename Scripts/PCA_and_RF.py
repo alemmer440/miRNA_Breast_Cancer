@@ -203,7 +203,7 @@ cf_matrix = confusion_matrix(y_test, y_pred)
 
 #Plot confusion matrix
 ax = plt.axes()
-plt.rcParams.update({'font.size': 12})
+#plt.rcParams.update({'font.size': 12})
 p=sns.heatmap(cf_matrix/np.sum(cf_matrix), annot=True, 
             fmt='.2%', ax=ax)
 ax.set_title('Random Forest Classifer Confusion Matrix')
