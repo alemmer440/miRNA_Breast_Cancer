@@ -8,7 +8,7 @@ import os
 import matplotlib.pyplot as plt
 
 
-path = '../Data/GDC_Data'
+path = '../Data/GDC_Data/'
 #Dictionary key= Case ID, value= files list
 with open('../Data/GDC_Metadata.json') as file:
     json_string = file.readlines()
@@ -26,11 +26,11 @@ for entry in metadata:
     # Getting the associated file name
     file_name = entry['file_name']
     
-    # If the Case ID is already in the dictionary, add the file
+    # If Case ID is already in the dictionary, add the file
     # name to the list of values
     if case_id in case_id_dict:
         case_id_dict[case_id].append(file_name)
-    # If not already in the dictionary, add new key and value
+    # If not already in the dictionary, add key and value
     else:
         case_id_dict[case_id] = [file_name]
 #Remove patients that don't have both miRNA and mRNA data
@@ -39,10 +39,10 @@ tumor_case_ids = []
 
 # For each Case ID
 for key in case_id_dict:
-    # If they have 2 files, add them to the list of files to use
+    # If they have 2 files, add them to list of files to use
     if len(case_id_dict[key]) == 2:
         tumor_case_ids.append(key)
-#collect miRNA expression data for miRNA 98 for histogram plot
+#collect miRNA expression data for miRNA 98 for hist plot
 cases = tumor_case_ids  #[0:num_patients]
 
 mirna_98_data=[]
@@ -141,8 +141,8 @@ for filename in os.listdir(path_normal):
       normal_mRNA= np.append(normal_mRNA, reads, axis=0)
 
 #Use an example file to get list of miRNA names
-ex_file="0b9ec0ab-16db-4d45-bb15-0e37f6b666a1.\
-    mirbase21.mirnas.quantification.txt"
+ex_file="0b9ec0ab-16db-4d45-bb15-0e37f6b666a1."\
+    "mirbase21.mirnas.quantification.txt"
 path_normal = '../Data/GDC_Normal_Data/'
 filepath= path_normal + ex_file
 ex_data=np.loadtxt(filepath, dtype='str')
@@ -150,14 +150,14 @@ print(ex_data[:,0])
 ex_data = np.delete(ex_data, 0, 0)
 gene_names= np.reshape(ex_data[:,0], (1881,1))
 
-#Make transposed matrix of miRNA for normal and 
-#tumor for DESeq input with ID headers and gene names as first column 
+#Make transposed matrix of miRNA for normal and tumor
+#for DESeq input with ID headers and gene names as first column 
 #open normal data
 normal_miRNA= np.empty((1881, 0))
 path_normal = '../Data/GDC_Normal_Data/'
 #extract gene names from example file and add as first column
-file_example='fda26b22-b0f8-498a-b627-f105d010f051.\
-    mirbase21.mirnas.quantification.txt'
+file_example='fda26b22-b0f8-498a-b627-f105d010f051.'\
+    'mirbase21.mirnas.quantification.txt'
 filepath_ex= path_normal + file_example
 mrnas = np.loadtxt(filepath_ex, dtype='str')
 mrnas = np.delete(mrnas, 0, 0)
@@ -224,5 +224,7 @@ pheno_id= np.concatenate((ids, pheno), axis=1)
 pheno_df= pd.DataFrame(pheno_id, columns=headers)
 
 #Save as CSV
-miRNA_df.to_csv('miRNA_counts_v2.csv', index=False, header=True, sep=',')
-pheno_df.to_csv('miRNA_pheno_v2.csv',index=False, header=True, sep=',' )
+miRNA_df.to_csv('miRNA_counts_v2.csv', index=False, header=True,\
+                sep=',')
+pheno_df.to_csv('miRNA_pheno_v2.csv',index=False, header=True,\
+                sep=',' )
