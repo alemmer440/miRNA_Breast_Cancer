@@ -15,8 +15,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 # metrics 
-from sklearn.metrics import roc_auc_score, accuracy_score, f1_score
-from sklearn.metrics import precision_score, recall_score, confusion_matrix
+from sklearn.metrics import roc_auc_score, accuracy_score
+from sklearn.metrics import precision_score, recall_score
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import cross_val_score, cross_validate
 from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.metrics import ConfusionMatrixDisplay, RocCurveDisplay
@@ -58,7 +59,6 @@ for entry in metadata:
     # If not already in the dictionary, add new key and value
     else:
         case_id_dict[case_id] = [file_name]
-
 
 # List of Case IDs that have the right number of files
 tumor_case_ids = []
@@ -107,9 +107,9 @@ for filename in os.listdir(path_normal):
       #mrnas = np.delete(mrnas, 0, 0)
 
 #concatenate normal and cancer miRNA
-mirna_combined= np.concatenate((mirna_cancer, normal_miRNA), axis=0)
+mirna_combined= np.concatenate((mirna_cancer,normal_miRNA), axis=0)
 
-######PCA###########################################################
+######PCA########################################################
 #Perform pca on miRNA data
 from sklearn.decomposition import PCA
 pca= PCA(n_components=50)
@@ -225,7 +225,7 @@ cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
 # evaluate model
 scoring=['roc_auc', 'accuracy', 'precision', 'recall']
 scores = cross_validate(pipeline, X, y, scoring=scoring, cv=cv, n_jobs=-1)
-#accuracy= cross_val_score(model2, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
+
 # summarize performance
 print('Mean ROC AUC : %.3f' % np.mean(scores['test_roc_auc']))
 print('Std ROC AUC : %.3f' % np.std(scores['test_roc_auc']))
@@ -244,7 +244,8 @@ feat_importances= np.reshape(feat_importances, (1881,1))
 print(feat_importances)
 
 #get gene names
-ex_file="0b9ec0ab-16db-4d45-bb15-0e37f6b666a1.mirbase21.mirnas.quantification.txt"
+ex_file="0b9ec0ab-16db-4d45-bb15-0e37f6b666a1.mirbase21."\
+"mirnas.quantification.txt"
 path_normal = '../Data/GDC_Normal_Data/'
 filepath= path_normal + ex_file
 ex_data=np.loadtxt(filepath, dtype='str')
