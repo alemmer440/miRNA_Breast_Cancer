@@ -155,6 +155,7 @@ gene_names= np.reshape(ex_data[:,0], (1881,1))
 #open normal data
 normal_miRNA= np.empty((1881, 0))
 path_normal = '../Data/GDC_Normal_Data/'
+
 #extract gene names from example file and add as first column
 file_example='fda26b22-b0f8-498a-b627-f105d010f051.'\
     'mirbase21.mirnas.quantification.txt'
