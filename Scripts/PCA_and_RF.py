@@ -116,6 +116,7 @@ pca= PCA(n_components=50)
 reduced_miRNA=pca.fit_transform(mirna_combined)
 
 #plot first two dimensions of pca 
+plt.figure()
 fig, ax = plt.subplots(figsize=(5,5))
 plt.rcParams.update({'font.size': 14})
 split_index= np.shape(mirna_cancer)[0]
@@ -133,6 +134,7 @@ ax.set_title("miRNA Expression PCA")
 ax.legend()
 
 #Create a Scree Plot
+plt.figure()
 fig, ax = plt.subplots(figsize=(5,5))
 PC_values = np.arange(pca.n_components_) + 1
 ax.plot(PC_values, pca.explained_variance_ratio_, 'o-',
@@ -146,20 +148,22 @@ ax.set_ylabel('Variance Explained')
 fig = plt.figure(figsize = (20, 10))
 ax = plt.axes(projection ="3d")
 split_index= np.shape(mirna_cancer)[0]
-ax.scatter3D(reduced_miRNA[0:split_index,0], reduced_miRNA[0:split_index,1],
- reduced_miRNA[0:split_index,2], s=3, label='Tumor') 
+ax.scatter3D(reduced_miRNA[0:split_index,0],
+ reduced_miRNA[0:split_index,1],reduced_miRNA[0:split_index,2],
+ s=3, label='Tumor') 
 ax.scatter3D(reduced_miRNA[split_index::,0],
  reduced_miRNA[split_index::,1], reduced_miRNA[split_index::,2],
  color='red', s= 3, label='Normal')
 ax.legend()
 
 #Make figure of first two pcs
+plt.figure()
 fig, ax = plt.subplots(figsize=(7,5))
 plt.rcParams.update({'font.size': 14})
 split_index= np.shape(mirna_cancer)[0]
-ax.scatter(reduced_miRNA[0:split_index,0], reduced_miRNA[0:split_index,1],
- s=3, label='Tumor') 
-ax.scatter(reduced_miRNA[split_index::,0], reduced_miRNA[split_index::,1],
+ax.scatter(reduced_miRNA[0:split_index,0],
+ reduced_miRNA[0:split_index,1],s=3, label='Tumor') 
+ax.scatter(reduced_miRNA[split_index::,0],reduced_miRNA[split_index::,1],
  color='red', s= 3, label='Normal')
 ax.set_xlabel("PC1 {:.2f}% Variance Explained".\
     format(pca.explained_variance_ratio_[0]*100, 3),size=14)
@@ -178,10 +182,10 @@ for i in range(len(mirna_cancer)):
 for j in range(len(normal_miRNA)):
     y.append(0)
 X= mirna_combined
-
 #split into testing and training sets
 X, y= shuffle(X, y)
-X_train, X_test, y_train, y_test= train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test= train_test_split(X, y,
+ test_size=0.2)
 
 #scale data
 scaler = preprocessing.StandardScaler().fit(X_train)
@@ -192,8 +196,10 @@ X_test_scaled= scaler.transform(X_test)
 model= RandomForestClassifier().fit(X_train_scaled, y_train)
 
 #ROC score
-train_auc= roc_auc_score(y_train, model.predict_proba(X_train_scaled)[:,1])
-test_auc= roc_auc_score(y_test, model.predict_proba(X_test_scaled)[:,1])
+train_auc= roc_auc_score(y_train, model.\
+ predict_proba(X_train_scaled)[:,1])
+test_auc= roc_auc_score(y_test, model.\
+ predict_proba(X_test_scaled)[:,1])
 print(train_auc)
 print(test_auc)
 
@@ -202,6 +208,7 @@ y_pred= model.predict(X_test_scaled)
 cf_matrix = confusion_matrix(y_test, y_pred)
 
 #Plot confusion matrix
+plt.figure()
 ax = plt.axes()
 #plt.rcParams.update({'font.size': 12})
 p=sns.heatmap(cf_matrix/np.sum(cf_matrix), annot=True, 
@@ -213,18 +220,19 @@ plt.show()
 p.figure.savefig('confusionmatrixv2.jpg', dpi=200)
 
 #Use cross validation to obtain performance metrics
-
 model2= RandomForestClassifier()
 scaler = preprocessing.StandardScaler()
 #model = RandomForestClassifier(max_depth=2, n_estimators=20)
 pipeline = Pipeline([('scaler', scaler), ('model', model2)])
 
 # Cross validation on 10 different test train splits
-cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+cv = RepeatedStratifiedKFold(n_splits=10,
+ n_repeats=3, random_state=1)
 
 # evaluate model
 scoring=['roc_auc', 'accuracy', 'precision', 'recall']
-scores = cross_validate(pipeline, X, y, scoring=scoring, cv=cv, n_jobs=-1)
+scores = cross_validate(pipeline, X, y, scoring=scoring,
+ cv=cv, n_jobs=-1)
 
 # summarize performance
 print('Mean ROC AUC : %.3f' % np.mean(scores['test_roc_auc']))
@@ -253,12 +261,15 @@ ex_data = np.delete(ex_data, 0, 0)
 gene_names= np.reshape(ex_data[:,0], (1881,1))
 
 #concatenate gene names with feature importances, save as csv
-gene_importances=np.concatenate((gene_names, feat_importances), axis=1)
+gene_importances=np.concatenate((gene_names, feat_importances),
+ axis=1)
 print(gene_importances)
 gene_importance_df= pd.DataFrame(gene_importances)
-gene_importance_df.to_csv('miRNA_importances.csv', index=False, header=False, sep=',')
+gene_importance_df.to_csv('miRNA_importances.csv',
+ index=False, header=False, sep=',')
 
 #Make ROC of training data
 model.fit(X_train_scaled, y_train)
+plt.figure()
 RocCurveDisplay.from_estimator(model, X_train_scaled, y_train)
 plt.title('ROC Tumor vs Normal Sample')
