@@ -46,7 +46,7 @@ For R code, the following packages are required:
 * ggplot2 version 3.3.6
 
 Once the necessary packages are installed, run the following command:  
-git clone https://github.com/alemmer440/HW4.git
+git clone https://github.com/alemmer440/miRNA_Breast_Cancer.git
 
 If the Data does not download, follow the instructions above to download the data from the source, and move the files into the repository directory.
 
