@@ -6,11 +6,14 @@ miRNA are short, non-coding RNAs that regulate gene expression at the post-trans
 
 ## Data
 
-All data is pulled from the National Cancer Institute GDC Data Portal, which can be found at this link: https://portal.gdc.cancer.gov/. Specifically, we filtered for female breast cancer patients from The Cancer Genome Atlas BRCA project that had both mRNA and microRNA data files. We filtered separately for cancerous and normal tissue. For mRNA files, we selected the versions using FPKM normalization, and for microRNAs we selected the version without isoforms. When downloaded, the data came in a highly nested directory, so we flattened all of the files into one directory. We also downloaded the associated json file containing the metadata, from which we can determine which files belong to each patient based on the file Case IDs. In total, there are cancerous data files for 1,100 patients, and normal data files for 268 of these patients. 
+All data is pulled from the National Cancer Institute GDC Data Portal, which can be found at this link: https://portal.gdc.cancer.gov/. Specifically, we filtered for female breast cancer patients from The Cancer Genome Atlas BRCA project that had both mRNA and microRNA data files. We filtered separately for cancerous and normal tissue. For mRNA files, we selected the versions using FPKM normalization, and for microRNAs we selected the version without isoforms. When downloaded, the data came in a highly nested directory, so we flattened all of the files into one directory, and deleted the MANIFEST.txt and annotations.txt files. We also downloaded the associated json file containing the metadata, from which we can determine which files belong to each patient based on the file Case IDs. In total, there are cancerous data files for 1,100 patients, and normal data files for 268 of these patients. 
 
-Note: Due to git LFS storage limits, you may not be able to download the data directly from this repository. Please go to the link listed above to filter and download the data. The nested directory can be flattened using the following command:
+Note: 
+Due to git LFS storage limits, you may not be able to download the data directly from this repository. You may go to the link listed above to filter and download the data. The nested directory can be flattened using the following command:
 find /dir1 -mindepth 2 -type f -exec mv -i '{}' /dir1 ';'
 where /dir1 is the path to the root directory. 
+
+Also of note, the NCI GDC Data Portal frequently updates file names and adds files. The exact dataset we used can be found at think link: https://drive.google.com/drive/folders/1eJS4BQRdFu213J8lzWpAOG1wN_xp_Jgr?usp=sharing
 
 ## Folder Structure
 
@@ -47,10 +50,10 @@ git clone https://github.com/alemmer440/HW4.git
 
 If the Data does not download, follow the instructions above to download the data from the source, and move the files into the repository directory.
 
-Finally, navigate to Scripts folder. The scripts should be run in the following order:
+Finally, navigate to Scripts folder. For python scripts, run using "python3 <script_name.py>". For jupyter notebooks, open the notebook and select kernel > restart and run all cells. The scripts should be run in the following order:
 * Organize_Classify_Data.ipynb: Uses the metadata to create a dictionary that has patients' IDs as the keys, and lists of all the file names associated with the patient as the values. Also creates a list of IDs of patients that only have cancerous samples. This information gets output into csv files.
 * Create_Cancer_Data_Csvs.ipynb: Generates 2 matricies, for miRNA and mRNA respectively, combing the data for each cancerous sample in the dataset. Each row will be a patient, and each column will be a miRNA/mRNA. Matricies are output into csv files.
 * Generate_data_for_DESeq.py: Creates csv files from the data in the correct format to use for DEseq for differential expression analysis.
 * DiffEx_analysis.R: Towards question 1 - which miRNA are differentially expressed in breast cancer - runs differential expression analysis for miRNA between normal and cancerous tissue. Generates a volcano plot.
-* PCA_and_RF.py: Towards question 2 - can miRNA data alone indicate breast cancer - runs PCA and random forest classifier using miRNA data from cancerous and healthy tissue. Generates PCA plot, confusion matrix, and ROC curve.
+* PCA_and_RF.py: Towards question 2 - can miRNA data alone indicate breast cancer - runs PCA and random forest classifier using miRNA data from cancerous and healthy tissue. Generates Scree plot, PCA plots, confusion matrix, and ROC curve.
 * Correlation_Matricies.ipynb: Towards question 3 - what are the relationships between miRNA and mRNA in the data, and what are the functional impacts of these relationships and miRNA aberrant expression - runs correlation analysis between miRNA and mRNA data. Generates correlation heatmaps.
