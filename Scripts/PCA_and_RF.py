@@ -216,8 +216,7 @@ p=sns.heatmap(cf_matrix/np.sum(cf_matrix), annot=True,
 ax.set_title('Random Forest Classifer Confusion Matrix')
 ax.set_xlabel('Predicted Label')
 ax.set_ylabel('True Label')
-plt.show()
-p.figure.savefig('confusionmatrixv2.jpg', dpi=200)
+
 
 #Use cross validation to obtain performance metrics
 model2= RandomForestClassifier()
