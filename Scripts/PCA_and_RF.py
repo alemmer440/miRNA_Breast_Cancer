@@ -88,6 +88,7 @@ for case in cases:
             col_num= len(mrnas[:,1])
             reads= np.reshape(mrnas[:,1], (1, col_num))
             mirna_cancer= np.append(mirna_cancer, reads, axis=0)
+
 #Make miRNA matrix for normal samples 
 # open normal data
 #for file in gdc_normal
@@ -107,9 +108,9 @@ for filename in os.listdir(path_normal):
       #mrnas = np.delete(mrnas, 0, 0)
 
 #concatenate normal and cancer miRNA
-mirna_combined= np.concatenate((mirna_cancer,normal_miRNA), axis=0)
+mirna_combined= np.concatenate((mirna_cancer,normal_miRNA),axis=0)
 
-######PCA########################################################
+######PCA#######################################################
 #Perform pca on miRNA data
 from sklearn.decomposition import PCA
 pca= PCA(n_components=50)
@@ -163,8 +164,8 @@ plt.rcParams.update({'font.size': 14})
 split_index= np.shape(mirna_cancer)[0]
 ax.scatter(reduced_miRNA[0:split_index,0],
  reduced_miRNA[0:split_index,1],s=3, label='Tumor') 
-ax.scatter(reduced_miRNA[split_index::,0],reduced_miRNA[split_index::,1],
- color='red', s= 3, label='Normal')
+ax.scatter(reduced_miRNA[split_index::,0],
+reduced_miRNA[split_index::,1],color='red', s= 3, label='Normal')
 ax.set_xlabel("PC1 {:.2f}% Variance Explained".\
     format(pca.explained_variance_ratio_[0]*100, 3),size=14)
 ax.set_ylabel("PC2 {:.2f}% Variance Explained".\
@@ -173,7 +174,7 @@ ax.set_title("miRNA Expression PCA")
 ax.legend()
 plt.savefig('PCAv4.jpg', dpi=200)
 
-#####Random forest classifier ########################################################
+#####Random forest classifier ###################################
 
 #make y list, 1 if tumor, 0 if normal sample 
 y=[]
