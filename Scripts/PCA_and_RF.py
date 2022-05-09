@@ -247,6 +247,7 @@ print('Recall : %.3f' % np.mean(scores['test_recall']))
 print('Recall std: %.3f' % np.std(scores['test_recall']))
 
 #Extract feature importances 
+model= RandomForestClassifier().fit(X_train_scaled, y_train)
 feat_importances= model.feature_importances_
 feat_importances= np.reshape(feat_importances, (1881,1))
 print(feat_importances)
