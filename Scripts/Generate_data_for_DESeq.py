@@ -225,7 +225,7 @@ pheno_id= np.concatenate((ids, pheno), axis=1)
 pheno_df= pd.DataFrame(pheno_id, columns=headers)
 
 #Save as CSV
-miRNA_df.to_csv('miRNA_counts_v2.csv', index=False, header=True,\
-                sep=',')
-pheno_df.to_csv('miRNA_pheno_v2.csv',index=False, header=True,\
-                sep=',' )
+miRNA_df.to_csv('../Organized_Data/miRNA_counts_v2.csv',\
+                index=False, header=True,sep=',')
+pheno_df.to_csv('../Organized_Data/miRNA_pheno_v2.csv',\
+                index=False, header=True,sep=',' )
