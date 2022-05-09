@@ -8,9 +8,9 @@ miRNA are short, non-coding RNAs that regulate gene expression at the post-trans
 
 All data is pulled from the National Cancer Institute GDC Data Portal, which can be found at this link: https://portal.gdc.cancer.gov/. Specifically, we filtered for female breast cancer patients from The Cancer Genome Atlas BRCA project that had both mRNA and microRNA data files. We filtered separately for cancerous and normal tissue. For mRNA files, we selected the versions using FPKM normalization, and for microRNAs we selected the version without isoforms. When downloaded, the data came in a highly nested directory, so we flattened all of the files into one directory, and deleted the MANIFEST.txt and annotations.txt files. We also downloaded the associated json file containing the metadata, from which we can determine which files belong to each patient based on the file Case IDs. In total, there are cancerous data files for 1,100 patients, and normal data files for 268 of these patients. 
 
-Note: 
-Due to git LFS storage limits, you may not be able to download the data directly from this repository. You may go to the link listed above to filter and download the data. The nested directory can be flattened using the following command:
-find /dir1 -mindepth 2 -type f -exec mv -i '{}' /dir1 ';'
+Note: <br>
+Due to git LFS storage limits, you may not be able to download the data directly from this repository. You may go to the link listed above to filter and download the data. The nested directory can be flattened using the following command: <br>
+find /dir1 -mindepth 2 -type f -exec mv -i '{}' /dir1 ';' <br>
 where /dir1 is the path to the root directory. 
 
 Also of note, the NCI GDC Data Portal frequently updates file names and adds files. The exact dataset we used can be found at think link: https://drive.google.com/drive/folders/1eJS4BQRdFu213J8lzWpAOG1wN_xp_Jgr?usp=sharing
