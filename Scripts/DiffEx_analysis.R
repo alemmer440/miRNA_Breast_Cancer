@@ -4,9 +4,11 @@ library( "DESeq2" )
 library(ggplot2)
 
 #Read in miRNA counts data and phenotype files
-miRNA_counts<- read.csv('../Data/miRNA_counts_v2.csv', row.names=1, header=TRUE)
+miRNA_counts<- read.csv('../Data/miRNA_counts_v2.csv',
+                        row.names=1, header=TRUE)
 
-miRNA_pheno<- read.csv('../Data/miRNA_pheno_v2.csv', header=TRUE)
+miRNA_pheno<- read.csv('../Data/miRNA_pheno_v2.csv',
+                       header=TRUE)
 
 #Use DESeq to conduct diff expression analysis 
 dds <- DESeqDataSetFromMatrix(countData = miRNA_counts,
@@ -34,10 +36,10 @@ resultdf=as.data.frame(res)
 resultdf$diffexpressed <- "Not Significant"
 # if log2Foldchange > 0.6 and pvalue < 0.05, set as "UP" 
 resultdf$diffexpressed[resultdf$log2FoldChange >
-                         1.5 & resultdf$padj < 0.05] <- "Significant"
+                         1.5 & resultdf$padj< 0.05] <-"Significant"
 # if log2Foldchange < -0.6 and pvalue < 0.05, set as "DOWN"
 resultdf$diffexpressed[resultdf$log2FoldChange <
-                         -1.5 & resultdf$padj < 0.05] <- "Significant"
+                         -1.5 & resultdf$padj< 0.05] <-"Significant"
 
 #Create Volcano Plot
 p <- ggplot(data=resultdf, aes(x=log2FoldChange, y=-log10(padj), 
