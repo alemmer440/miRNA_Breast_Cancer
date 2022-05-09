@@ -48,9 +48,9 @@ For R code, the following packages are required:
 Once the necessary packages are installed, run the following command:  
 git clone https://github.com/alemmer440/miRNA_Breast_Cancer.git
 
-If the Data does not download, follow the instructions above to download the data from the source, and move the files into the repository directory.
+If the Data does not download, follow the instructions above to download the data from the source or google drive, and move the files into the repository directory.
 
-Finally, navigate to Scripts folder. For python scripts, run using "python3 <script_name.py>". For jupyter notebooks, open the notebook and select kernel > restart and run all cells. The scripts should be run in the following order:
+Finally, navigate to Scripts folder. For python scripts, run using "python3 <script_name.py>". For jupyter notebooks, open the notebook and select "Kernel" > "Restart & Run All". The scripts should be run in the following order:
 * Organize_Classify_Data.ipynb: Uses the metadata to create a dictionary that has patients' IDs as the keys, and lists of all the file names associated with the patient as the values. Also creates a list of IDs of patients that only have cancerous samples. This information gets output into csv files.
 * Create_Cancer_Data_Csvs.ipynb: Generates 2 matricies, for miRNA and mRNA respectively, combing the data for each cancerous sample in the dataset. Each row will be a patient, and each column will be a miRNA/mRNA. Matricies are output into csv files.
 * Generate_data_for_DESeq.py: Creates csv files from the data in the correct format to use for DEseq for differential expression analysis.
